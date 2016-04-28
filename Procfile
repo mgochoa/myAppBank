@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/myAppBank -Dhttp.port=${PORT}
+web: target/universal/stage/bin/myappbank -Dhttp.port=${PORT}
