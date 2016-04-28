@@ -1,4 +1,4 @@
-name := """play-reactive-mongo-db"""
+name := """myAppBank"""
 
 version := "1.0-SNAPSHOT"
 
