@@ -1,1 +1,6 @@
-GET     /clientes                   controllers.PersonController.find
+GET     /clientes/:tipoDocumento/:numeroDocumento  controllers.ClientController.findById(tipoDocumento:String,numeroDocumento:Int)
+GET     /clientes                   controllers.ClientController.find()
+
+
+POST    /clientes/add               controllers.ClientController.create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String)
+
