@@ -28,7 +28,7 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
         val cursor: Future[List[JsObject]] = clientesFuture.flatMap{ clientes => //Logger.debug(clientes)
           // find all people with name `name`
           clientes.find(Json.obj())
-          .sort(Json.obj("numeroDocumento" -> -1))
+          .sort(Json.obj("NumeroDocumento" -> -1))
           // perform the query and get a cursor of JsObject
           .cursor[JsObject](ReadPreference.primary).collect[List]()
       }
@@ -40,7 +40,7 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
     val json = Json.obj(
       "NombreCompleto" -> NombreCompleto,
       "tipoDocumento" -> tipoDocumento,
-      "numeroDocumento" -> numeroDocumento,
+      "NumeroDocumento" -> numeroDocumento,
       "ejecutivoAcargo" -> ejecutivoAcargo,
       "productos" -> "[]")
 
@@ -50,14 +50,14 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
     } yield Ok("Mongo LastError: %s".format(lastError))
 
   }
-  
+
     def findById(tipoDocumento:String,numeroDocumento: Int) = Action.async {
     // let's do our query
     val cursor: Future[List[JsObject]] = clientesFuture.flatMap{ clientes =>
       // find all people with name `name`
-      clientes.find(Json.obj("tipoDocumento"->tipoDocumento,"numeroDocumento" -> numeroDocumento)).
+      clientes.find(Json.obj("tipoDocumento"->tipoDocumento,"NumeroDocumento" -> numeroDocumento)).
       // sort them by creation date
-      sort(Json.obj("numeroDocumento" -> -1)).
+      sort(Json.obj("NumeroDocumento" -> -1)).
       // perform the query and get a cursor of JsObject
       cursor[JsObject](ReadPreference.primary).collect[List]()
   }
@@ -67,6 +67,6 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
       Ok(Json.toJson(clientes))
     }
   }
-    
-    
+
+
 }
