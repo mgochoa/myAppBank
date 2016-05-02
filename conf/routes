@@ -1,7 +1,11 @@
-GET		/		controllers.HomeController.index
-GET     /clientes/:tipoDocumento/:numeroDocumento	controllers.ClientController.findById(tipoDocumento:String,numeroDocumento:Int)
-GET     /clientes	controllers.ClientController.find()
+GET		/		                                        controllers.HomeController.index
+GET     /clientes/:tipoDocumento/:numeroDocumento	    controllers.ClientController.findById(tipoDocumento:String,numeroDocumento:Int)
+GET     /clientes	                                    controllers.ClientController.find
 
+GET     /ejecutivos                                     controllers.ExecutiveController.find
+GET     /ejecutivos/:tipoDocumento/:numeroDocumento     controllers.ExecutiveController.findById(tipoDocumento:String,numeroDocumento:String)
 
-POST	/clientes/add	controllers.ClientController.create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String)
+GET     /tokenValido/:token                             controllers.ClientController.authToken(token:String)
+
+POST	/clientes/add	                                controllers.ClientController.create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String)
 
