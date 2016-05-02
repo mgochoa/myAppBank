@@ -33,7 +33,7 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
           .cursor[JsObject](ReadPreference.primary).collect[List]()
       }
       cursor.map { clientes =>
-          Ok(Json.toJson(clientes))
+          Ok(Json.toJson(clientes)).withHeaders(ACCESS_CONTROL_ALLOW_ORIGIN -> "*")
         }
     }
     def create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String) = Action.async {
@@ -64,7 +64,7 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
 
     // everything's ok! Let's reply with a JsValue
     cursor.map { clientes =>
-      Ok(Json.toJson(clientes))
+      Ok(Json.toJson(clientes)).withHeaders(ACCESS_CONTROL_ALLOW_ORIGIN -> "*")
     }
   }
 
