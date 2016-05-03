@@ -5,5 +5,5 @@ GET     /clientes	                                    controllers.ClientControll
 GET     /ejecutivos                                     controllers.ExecutiveController.find
 GET     /ejecutivos/:tipoDocumento/:numeroDocumento     controllers.ExecutiveController.findById(tipoDocumento:String,numeroDocumento:String)
 
-POST	/clientes/add	                                controllers.ClientController.create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String)
+POST	/clientes/add	                                controllers.ClientController.create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String, correo:String)
 

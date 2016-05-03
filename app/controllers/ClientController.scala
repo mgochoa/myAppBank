@@ -26,9 +26,9 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
     def find = Action.async {
     // let's do our query
         val cursor: Future[List[JsObject]] = clientesFuture.flatMap{ clientes => //Logger.debug(clientes)
-          // find all people with name `name`
+          // Encuentra todos los clientes
           clientes.find(Json.obj())
-          .sort(Json.obj("NumeroDocumento" -> -1))
+          .sort(Json.obj("documento" -> -1))
           // perform the query and get a cursor of JsObject
           .cursor[JsObject](ReadPreference.primary).collect[List]()
       }
@@ -36,12 +36,13 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
           Ok(Json.toJson(clientes)).withHeaders(ACCESS_CONTROL_ALLOW_ORIGIN -> "*")
         }
     }
-    def create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String) = Action.async {
+    def create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String, correo:String) = Action.async {
     val json = Json.obj(
-      "NombreCompleto" -> NombreCompleto,
-      "tipoDocumento" -> tipoDocumento,
-      "NumeroDocumento" -> numeroDocumento,
-      "ejecutivoAcargo" -> ejecutivoAcargo,
+      "nombre_completo" -> NombreCompleto,
+      "tipo_doc" -> tipoDocumento,
+      "documento" -> numeroDocumento,
+      "ejecutivo_encargado" -> ejecutivoAcargo,
+      "correo" ->correo,
       "productos" -> "[]")
 
     for {
@@ -54,10 +55,10 @@ class ClientController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(implici
     def findById(tipoDocumento:String,numeroDocumento: Int) = Action.async {
     // let's do our query
     val cursor: Future[List[JsObject]] = clientesFuture.flatMap{ clientes =>
-      // find all people with name `name`
-      clientes.find(Json.obj("tipoDocumento"->tipoDocumento,"NumeroDocumento" -> numeroDocumento)).
-      // sort them by creation date
-      sort(Json.obj("NumeroDocumento" -> -1)).
+      // Encuentre a los clientes por Tipo Documento y Numero documento
+      clientes.find(Json.obj("tipo_doc"->tipoDocumento,"documento" -> numeroDocumento)).
+      // Se organiza por numero de documento
+      sort(Json.obj("documento" -> -1)).
       // perform the query and get a cursor of JsObject
       cursor[JsObject](ReadPreference.primary).collect[List]()
   }

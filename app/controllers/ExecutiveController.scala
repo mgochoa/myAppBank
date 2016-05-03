@@ -32,7 +32,7 @@ class ExecutiveController @Inject()(val reactiveMongoApi: ReactiveMongoApi)(impl
 
   def findById(tipoDocumento:String,numeroDocumento: String) = Action.async {
     val cursor: Future[List[JsObject]] = ejecutivosFuture.flatMap{ ejecutivos =>
-      ejecutivos.find(Json.obj("tipoDocumento"->tipoDocumento,"documento" -> numeroDocumento)).
+      ejecutivos.find(Json.obj("tipo_doc"->tipoDocumento,"documento" -> numeroDocumento)).
         sort(Json.obj("documento" -> -1)).
         cursor[JsObject](ReadPreference.primary).collect[List]()
     }
