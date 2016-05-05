@@ -1,9 +1,9 @@
 GET		/		                                        controllers.HomeController.index
-GET     /clientes/:tipoDocumento/:numeroDocumento	    controllers.ClientController.findById(tipoDocumento:String,numeroDocumento:Int)
+GET     /clientes/:documentType/:documentNumber	    	controllers.ClientController.findById(documentType:String, documentNumber:String)
 GET     /clientes	                                    controllers.ClientController.find
 
 GET     /ejecutivos                                     controllers.ExecutiveController.find
-GET     /ejecutivos/:tipoDocumento/:numeroDocumento     controllers.ExecutiveController.findById(tipoDocumento:String,numeroDocumento:String)
+GET     /ejecutivos/:documentType/:documentNumber     	controllers.ExecutiveController.findById(documentType:String, documentNumber:String)
 
-POST	/clientes/add	                                controllers.ClientController.create(NombreCompleto: String,tipoDocumento: String, numeroDocumento:Int,ejecutivoAcargo:String)
+POST	/clientes/add	                                controllers.ClientController.create
 
