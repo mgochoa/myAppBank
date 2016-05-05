@@ -1,73 +1,115 @@
-# Example application using play 2.5 and reactive mongo
+# Internal API MyBank
 
-# Configure MongoDB
+## Modo de Uso
 
-Just change it in application.conf
-```
-mongodb.uri = "mongodb://localhost/persons"
-```
+Las llamadas al api deben contener el token que provee firebase ya sea como HTTP Header (preferido)
 
-# Run it
-```
-sbt run
-```
-# Cities
+HTTP Authorization Bearer \[TOKEN\]
 
-Cities controller uses a model, showing how simple it is in Play to parse json data from the clients
+o como parametro en la ruta
 
-## Add some cities
+https://shrouded-beyond-64833.herokuapp.com/\[RUTA_A_CONSUMIR\]?token=\[TOKEN\]
 
-```
-curl -H "Content-Type: application/json" -X POST -d '{"name":"london","population": 8539000}' http://localhost:9000/cities/
-curl -X "POST" http://localhost:9000/cities/add\?name\=Paris&population\=2244000
-```
-## Add some cities in bulk
+## Rutas habilitadas
+
+### GET /clientes
+Ej. (https://shrouded-beyond-64833.herokuapp.com/clientes)
+
+Retorna un array con la informacion de todos los clientes y con la siguiente estructura
 
 ```
-curl -H "Content-Type: application/json" -X POST -d '[{"name":"tokyo","population": 13350000}, {"name":"osaka","population": 2665000}]' http://localhost:9000/cities/bulk
+[
+  {
+    "_id": {
+      "$oid": "572973263fdca6fc11e8590a"
+    },
+    "nombre_completo": "Janice Greene",
+    "tipo_doc": "ce",
+    "documento": "931547116",
+    "ejecutivo_encargado": "BBVACEO",
+    "correo": "jgreenes@cafepress.com",
+    "productos": [
+      {
+        "nombre": "Credito de libre inversion",
+        "tipo": "Prestamo",
+        "saldo": 6493947
+      },
+      {
+        "nombre": "Poliza de seguros contra accidentes laborales",
+        "tipo": "Seguro",
+        "saldo": 9172070
+      },
+      {
+        "nombre": "Poliza de seguro de vida",
+        "tipo": "Seguro",
+        "saldo": 70984
+      },
+      {
+        "nombre": "Deposito a termino fijo - 60 dias",
+        "tipo": "CDT",
+        "saldo": 7900067
+      }
+    ]
+  }
+  ....
+]
 ```
 
-## Search cities
+### GET /clientes/\[tipoDocumento\]/\[NumeroDocumento\]
+Ej. (https://shrouded-beyond-64833.herokuapp.com/clientes/adultonn/1037008984)
+
+Retorna un array de un solo objeto con toda la informacion del cliente que concuerde con el tipo de documento y el numero de identificacion
 
 ```
-curl http://localhost:9000/cities?name=Paris
+[
+  {
+    "_id": {
+      "$oid": "572973263fdca6fc11e8590a"
+    },
+    "nombre_completo": "Janice Greene",
+    "tipo_doc": "ce",
+    "documento": "931547116",
+    "ejecutivo_encargado": "BBVACEO",
+    "correo": "jgreenes@cafepress.com",
+    "productos": [
+      {
+        "nombre": "Credito de libre inversion",
+        "tipo": "Prestamo",
+        "saldo": 6493947
+      },
+      {
+        "nombre": "Poliza de seguros contra accidentes laborales",
+        "tipo": "Seguro",
+        "saldo": 9172070
+      },
+      {
+        "nombre": "Poliza de seguro de vida",
+        "tipo": "Seguro",
+        "saldo": 70984
+      },
+      {
+        "nombre": "Deposito a termino fijo - 60 dias",
+        "tipo": "CDT",
+        "saldo": 7900067
+      }
+    ]
+  }
+]
 ```
 
-## See some errors
+### POST /clientes/add
 
-curl -H "Content-Type: application/json" -X POST -d '{"name":"london"}' http://localhost:9000/cities/
-
-curl -H "Content-Type: application/json" -X POST -d '{"name":"london", "population": "x"}' http://localhost:9000/cities/
-
-curl -H "Content-Type: application/json" -X POST -d '[{"name":"unknown"}]' http://localhost:9000/cities/bulk
-
-
-# Persons
-
-Person controller does not use a model, following the Coast to coast Json approach
-
-## Add some persons
+Acepta los parametros
 
 ```
-curl -H "Content-Type: application/json" -X POST -d '{"name":"jason","age": 12}' http://localhost:9000/persons/
-curl -X "POST" http://localhost:9000/persons/add\?name\=Jason%20Voorhees\&age\=31
-```
-
-## Add some persons in bulk
-
-```
-curl -H "Content-Type: application/json" -X POST -d '[{"name":"jacob","age": 35}, {"name":"rohit","age": 27}, {"name":"federico","age": 31}, {"name":"oliver","age": 33}]' http://localhost:9000/persons/bulk
-```
-
-Test invalid formats
-```
-curl -H "Content-Type: application/json" -X POST -d '[{"name": "pepe"}]' http://localhost:9000/persons/bulk
+documento: String (Requerido)
+tipo_doc: String (Requerido)
+ejecutivo_encargado: String (Requerido)
+nombre_completo: String (Requerido)
+correo: String (Requerido)
 ```
 
 
-## Search persons
 
-```
-curl http://localhost:9000/persons?name=jason
-```
+
 
