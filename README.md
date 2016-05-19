@@ -55,7 +55,7 @@ Retorna un array con la informacion de todos los clientes y con la siguiente est
 ]
 ```
 
-### GET /clientes/\[tipoDocumento\]/\[NumeroDocumento\]
+### GET /clientes/\[tipoDocumento\]/\[NumeroDocumento\]?token=[NUMEROTOKEN]
 Ej. (https://shrouded-beyond-64833.herokuapp.com/clientes/adultonn/1037008984)
 
 Retorna un array de un solo objeto con toda la informacion del cliente que concuerde con el tipo de documento y el numero de identificacion
